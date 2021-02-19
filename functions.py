@@ -1,4 +1,5 @@
-from config import ui
+import sys
+from config import ui,mainWindow,application
 from db import curs,conn
 from PyQt5 import QtCore
 #from PyQt5 import QtWidgets
@@ -37,3 +38,13 @@ def FETCH():
         for columnIndex,columnItem in enumerate(rowItem):
             ui.athleteData.setItem(rowIndex,columnIndex,QTableWidgetItem(str(columnItem)))
 
+
+def EXIT():
+    answer=QMessageBox.question(mainWindow,"ÇIKIŞ","Programdan çıkmak istediğinize emin misiniz?",QMessageBox.Yes|QMessageBox.No)
+    if answer==QMessageBox.Yes:
+        conn.close()
+        sys.exit(application.exec_())
+    else:
+        mainWindow.show()
+     
+    

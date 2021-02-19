@@ -7,6 +7,7 @@ import functions
 functions.FETCH()
 ui.createButton.clicked.connect(functions.CREATE)
 ui.fetchButton.clicked.connect(functions.FETCH)
+ui.exitButton.clicked.connect(functions.EXIT)
 
 
 
