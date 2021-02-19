@@ -1,17 +1,12 @@
 import sys
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import *
-from HomeLayoutUI import *
+from config import ui,application
+from db import curs,conn
+import functions
 
+        
 
-application = QApplication(sys.argv)
-mainWindow=QMainWindow()
-ui = Ui_MainWindow()
-ui.setupUi(mainWindow)
-mainWindow.show()
+ui.createButton.clicked.connect(functions.CREATE)
 
-
-import db
 
 
 
