@@ -1,6 +1,8 @@
 from config import ui
 from db import curs,conn
 from PyQt5 import QtCore
+#from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import *
 
 
 def CREATE():
@@ -20,4 +22,18 @@ def CREATE():
     curs.execute("INSERT INTO athletes (tcId,firstName,lastName,sportClub,athleteWeight,athleteGender,maritalStatus,branchOfSport,birthday) VALUES (?,?,?,?,?,?,?,?,?)",(tcId,firstName,lastName,sportClub,athleteWeight,athleteGender,maritalStatus,branchOfSport,birthday))
   
     conn.commit()
+    FETCH()
         
+
+def FETCH():
+    ui.athleteData.clear()
+    ui.athleteData.setHorizontalHeaderLabels(("#","Tc Kimlik No","Sporcu Adı","Sporcu Soyadı",\
+    "Klüp Adı","Branş","Cinsiyet","Doğum Tarihi","Medeni Hal","Sporcu Kilosu"))
+    
+    ui.athleteData.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+    curs.execute("SELECT * FROM athletes")
+    
+    for rowIndex,rowItem in enumerate(curs):
+        for columnIndex,columnItem in enumerate(rowItem):
+            ui.athleteData.setItem(rowIndex,columnIndex,QTableWidgetItem(str(columnItem)))
+
