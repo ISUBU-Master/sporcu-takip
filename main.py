@@ -11,5 +11,8 @@ ui.setupUi(mainWindow)
 mainWindow.show()
 
 
+import db
+
+
 
 sys.exit(application.exec_())
