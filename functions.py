@@ -44,7 +44,12 @@ def FETCH():
     for rowIndex,rowItem in enumerate(curs):
         for columnIndex,columnItem in enumerate(rowItem):
             ui.athleteData.setItem(rowIndex,columnIndex,QTableWidgetItem(str(columnItem)))
-
+    ui.tcId.clear()
+    ui.firstName.clear()
+    ui.lastName.clear()
+    ui.sportClub.setCurrentIndex(0)
+    ui.athleteWeight.setValue(55)
+    ui.athleteGender.currentText()
 
 def EXIT():
     answer=QMessageBox.question(mainWindow,"ÇIKIŞ","Programdan çıkmak istediğinize emin misiniz?",QMessageBox.Yes|QMessageBox.No)
