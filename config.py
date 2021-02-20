@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
 from HomeLayoutUI import *
+from AboutLayoutUI import *
 
 
 application = QApplication(sys.argv)
@@ -11,6 +12,9 @@ ui.setupUi(mainWindow)
 mainWindow.show()
 
 
+windowAbout=QDialog()
+aboutUI=Ui_Dialog()
+aboutUI.setupUi(windowAbout)
 
 
 

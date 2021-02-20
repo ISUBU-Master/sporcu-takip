@@ -1,5 +1,5 @@
 import sys
-from config import ui,mainWindow,application
+from config import ui,mainWindow,application,windowAbout
 from db import curs,conn
 from PyQt5 import QtCore
 #from PyQt5 import QtWidgets
@@ -52,8 +52,13 @@ def FETCH():
     ui.athleteGender.currentText()
     
     curs.execute("SELECT COUNT(*) FROM athletes")
-    
+
     ui.dataSize.setText(str(curs.fetchone()[0]))
+    
+    curs.execute("SELECT AVG(athleteWeight) FROM athletes")
+    averageWeight=curs.fetchone()
+    ui.averageWeight.setText(str(averageWeight[0]))
+    
 
 def EXIT():
     answer=QMessageBox.question(mainWindow,"ÇIKIŞ","Programdan çıkmak istediğinize emin misiniz?",QMessageBox.Yes|QMessageBox.No)
@@ -175,3 +180,5 @@ def UPDATE():
         ui.statusbar.showMessage("Güncelleme iptal edildi.",10000)
     
     
+def ABOUT():
+    windowAbout.show()
