@@ -32,7 +32,7 @@ def CREATE():
 def FETCH():
     ui.athleteData.clear()
     ui.athleteData.setHorizontalHeaderLabels(("#","Tc Kimlik No","Sporcu Adı","Sporcu Soyadı",\
-    "Klüp Adı","Branş","Cinsiyet","Doğum Tarihi","Medeni Hal","Sporcu Kilosu"))
+    "Klüp Adı","Kilosu","Cinsiyet","Medeni Hal","Branş","Doğum Tarihi"))
     
     ui.athleteData.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
     try:
@@ -94,4 +94,45 @@ def SEARCH():
         ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi: "+str(error),10000)
     
 
+
+def SET_FORM():
+#    4           5       6           7           8           9
+#    "Klüp Adı","Kilosu","Cinsiyet","Medeni Hal","Branş","Doğum Tarihi")
+    item = ui.athleteData.selectedItems()
+    ui.tcId.setText(item[1].text())
+    ui.firstName.setText(item[2].text())
+    ui.lastName.setText(item[3].text())
+    ui.sportClub.setCurrentText(item[4].text())
+    if (item[8].text()=="Futbol"):
+        ui.branchOfSport.item(0).setSelected(True)
+        ui.branchOfSport.setCurrentItem(ui.branchOfSport.item(0))
+    if (item[8].text()=="Atletizm"):
+        ui.branchOfSport.item(1).setSelected(True)
+        ui.branchOfSport.setCurrentItem(ui.branchOfSport.item(1))
+    if (item[8].text()=="Basketbol"):
+        ui.branchOfSport.item(2).setSelected(True)
+        ui.branchOfSport.setCurrentItem(ui.branchOfSport.item(2))
+    if (item[8].text()=="Boks"):
+        ui.branchOfSport.item(3).setSelected(True)
+        ui.branchOfSport.setCurrentItem(ui.branchOfSport.item(3))
+    if (item[8].text()=="Güreş"):
+        ui.branchOfSport.item(4).setSelected(True)
+        ui.branchOfSport.setCurrentItem(ui.branchOfSport.item(4))
+    if (item[8].text()=="Hentbol"):
+        ui.branchOfSport.item(5).setSelected(True)
+        ui.branchOfSport.setCurrentItem(ui.branchOfSport.item(5))
+    
+    
+    ui.athleteGender.setCurrentText(item[6].text())
+    y=int(item[9].text()[0:4])
+    m=int(item[9].text()[5:7])
+    d=int(item[9].text()[8:10])
+    ui.birthday.setSelectedDate(QtCore.QDate(y,m,d))
+    
+    if item[7].text()=="Evli":
+        ui.maritalStatus.setChecked(True)
+    else:
+        ui.maritalStatus.setChecked(False)
+    
+    ui.athleteWeight.setValue(int(item[5].text()))
     
