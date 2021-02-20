@@ -96,8 +96,6 @@ def SEARCH():
 
 
 def SET_FORM():
-#    4           5       6           7           8           9
-#    "Klüp Adı","Kilosu","Cinsiyet","Medeni Hal","Branş","Doğum Tarihi")
     item = ui.athleteData.selectedItems()
     ui.tcId.setText(item[1].text())
     ui.firstName.setText(item[2].text())
@@ -135,4 +133,43 @@ def SET_FORM():
         ui.maritalStatus.setChecked(False)
     
     ui.athleteWeight.setValue(int(item[5].text()))
+    
+
+def UPDATE():
+    answer=QMessageBox.question(mainWindow,"KAYIT GÜNCELLE","Kaydı güncellemek istediğinize emin misiniz?",QMessageBox.Yes|QMessageBox.No)
+    
+    if answer==QMessageBox.Yes:
+        try:
+            item = ui.athleteData.selectedItems()
+            _id=int(item[0].text())
+            _tcId = ui.tcId.text()
+            _firstName = ui.firstName.text()
+            _lastName = ui.lastName.text()
+            _sportClub = ui.sportClub.currentText()
+            _athleteWeight = ui.athleteWeight.value()
+            _athleteGender = ui.athleteGender.currentText()
+            if ui.maritalStatus.isChecked() :
+                _maritalStatus="Evli"
+            else:
+                _maritalStatus="Bekar"
+            _branchOfSport = ui.branchOfSport.currentItem().text()
+            _birthday = ui.birthday.selectedDate().toString(QtCore.Qt.ISODate)
+            
+            curs.execute("UPDATE athletes SET \
+             tcId=?,\
+             firstName=?,\
+             lastName=?,\
+             sportClub=?,\
+             athleteWeight=?,\
+             athleteGender=?,\
+             maritalStatus=?,\
+             branchOfSport=?,\
+             birthday=? WHERE id=?",(_tcId,_firstName,_lastName,_sportClub,_athleteWeight,_athleteGender,_maritalStatus,_branchOfSport,_birthday,_id))
+            conn.commit()
+            FETCH()
+        except Exception as error:
+            ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi: "+str(error))
+    else:
+        ui.statusbar.showMessage("Güncelleme iptal edildi.",10000)
+    
     
