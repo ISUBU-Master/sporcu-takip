@@ -48,3 +48,16 @@ def EXIT():
         mainWindow.show()
      
     
+def DELETE():
+    answer=QMessageBox.question(mainWindow,"KAYIT SİL","Kaydı silmek istediğinize emin misiniz?",QMessageBox.Yes|QMessageBox.No)
+    if answer==QMessageBox.Yes:
+        selectItemTcId = ui.athleteData.selectedItems()[1].text()
+        try:
+            curs.execute("DELETE FROM athletes WHERE tcId='%s'" %(selectItemTcId))
+            conn.commit()
+            FETCH()
+            ui.statusbar.showMessage("Kayıt Silme İşlemi Başarıyla Gerçekleşti...",10000)
+        except Exception as error:
+            ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi:"+str(error),10000)
+    else:
+        ui.statusbar.showMessage("Silme işlemi iptal edildi...",10000)

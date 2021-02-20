@@ -8,6 +8,7 @@ functions.FETCH()
 ui.createButton.clicked.connect(functions.CREATE)
 ui.fetchButton.clicked.connect(functions.FETCH)
 ui.exitButton.clicked.connect(functions.EXIT)
+ui.deleteButton.clicked.connect(functions.DELETE)
 
 
 
