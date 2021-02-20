@@ -26,7 +26,7 @@ def CREATE():
         FETCH()
         ui.statusbar.showMessage("Yeni kayıt başarıyla eklendi",10000)
     except Exception as error:
-        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi:"+str(error),10000)
+        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi: "+str(error),10000)
         
 
 def FETCH():
@@ -38,7 +38,7 @@ def FETCH():
     try:
         curs.execute("SELECT * FROM athletes")
     except Exception as error:
-        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi:"+str(error),10000)
+        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi: "+str(error),10000)
         
     
     for rowIndex,rowItem in enumerate(curs):
@@ -65,6 +65,24 @@ def DELETE():
             FETCH()
             ui.statusbar.showMessage("Kayıt Silme İşlemi Başarıyla Gerçekleşti...",10000)
         except Exception as error:
-            ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi:"+str(error),10000)
+            ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi: "+str(error),10000)
     else:
         ui.statusbar.showMessage("Silme işlemi iptal edildi...",10000)
+
+def SEARCH():
+    tcId = ui.tcId.text()
+    firstName = ui.firstName.text()
+    lastName = ui.lastName.text()
+    try:
+        curs.execute("SELECT * FROM athletes WHERE tcId=? OR firstName=? OR lastName=? OR (firstName=? AND lastName=?)",(tcId,firstName,lastName,firstName,lastName))
+        conn.commit()
+        ui.athleteData.clear()
+        for rowIndex,rowItem in enumerate(curs):
+            for columnIndex,columnItem in enumerate(rowItem):
+                ui.athleteData.setItem(rowIndex,columnIndex,QTableWidgetItem(str(columnItem)))
+                
+    except Exception as error:
+        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi: "+str(error),10000)
+    
+
+    
