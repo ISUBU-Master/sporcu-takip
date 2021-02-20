@@ -50,6 +50,10 @@ def FETCH():
     ui.sportClub.setCurrentIndex(0)
     ui.athleteWeight.setValue(55)
     ui.athleteGender.currentText()
+    
+    curs.execute("SELECT COUNT(*) FROM athletes")
+    
+    ui.dataSize.setText(str(curs.fetchone()[0]))
 
 def EXIT():
     answer=QMessageBox.question(mainWindow,"ÇIKIŞ","Programdan çıkmak istediğinize emin misiniz?",QMessageBox.Yes|QMessageBox.No)
