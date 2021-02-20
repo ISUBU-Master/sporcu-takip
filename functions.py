@@ -20,10 +20,13 @@ def CREATE():
     branchOfSport = ui.branchOfSport.currentItem().text()
     birthday = ui.birthday.selectedDate().toString(QtCore.Qt.ISODate)
     
-    curs.execute("INSERT INTO athletes (tcId,firstName,lastName,sportClub,athleteWeight,athleteGender,maritalStatus,branchOfSport,birthday) VALUES (?,?,?,?,?,?,?,?,?)",(tcId,firstName,lastName,sportClub,athleteWeight,athleteGender,maritalStatus,branchOfSport,birthday))
-  
-    conn.commit()
-    FETCH()
+    try:
+        curs.execute("INSERT INTO athletes (tcId,firstName,lastName,sportClub,athleteWeight,athleteGender,maritalStatus,branchOfSport,birthday) VALUES (?,?,?,?,?,?,?,?,?)",(tcId,firstName,lastName,sportClub,athleteWeight,athleteGender,maritalStatus,branchOfSport,birthday))
+        conn.commit()
+        FETCH()
+        ui.statusbar.showMessage("Yeni kayıt başarıyla eklendi",10000)
+    except Exception as error:
+        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi:"+str(error),10000)
         
 
 def FETCH():
@@ -32,7 +35,11 @@ def FETCH():
     "Klüp Adı","Branş","Cinsiyet","Doğum Tarihi","Medeni Hal","Sporcu Kilosu"))
     
     ui.athleteData.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-    curs.execute("SELECT * FROM athletes")
+    try:
+        curs.execute("SELECT * FROM athletes")
+    except Exception as error:
+        ui.statusbar.showMessage("Beklenmedik bir hata meydana geldi:"+str(error),10000)
+        
     
     for rowIndex,rowItem in enumerate(curs):
         for columnIndex,columnItem in enumerate(rowItem):
